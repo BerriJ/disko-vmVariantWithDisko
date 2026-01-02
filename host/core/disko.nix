@@ -90,7 +90,7 @@
     tests.extraConfig = {
 
       # This does not work
-      # disko.devices.disk.main.content.partitions.main.content.settings.keyFile = "/tmp/secret.key";
+      disko.devices.disk.main.content.partitions.main.content.settings.keyFile = "/tmp/secret.key";
 
       boot.initrd = {
         systemd = {
@@ -117,7 +117,7 @@
         luks.devices = {
           main = {
             # Works if I do the overwrite here
-            keyFile = "/tmp/secret.key";
+            # keyFile = "/tmp/secret.key";
           };
         };
       };
