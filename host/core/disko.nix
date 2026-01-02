@@ -50,59 +50,35 @@
                   askPassword = false;
                   settings = {
                     allowDiscards = true;
-                    preLVM = true;
                   };
                   content = {
-                    type = "lvm_pv";
-                    vg = "pool";
-                  };
-                };
-              };
-            };
-          };
-        };
-      };
-      lvm_vg = {
-        "pool" = {
-          type = "lvm_vg";
-          lvs = {
-            swap = {
-              size = lib.mkDefault "128G";
-              priority = 300;
-              content = {
-                type = "swap";
-              };
-            };
-            system = {
-              # name = "system";
-              size = "100%FREE";
-              priority = 400;
-              content = {
-                type = "btrfs";
-                extraArgs = [
-                  "-f"
-                  "-L"
-                  "system"
-                ];
-                subvolumes = {
-                  "@" = {
-                    mountpoint = "/";
-                    mountOptions = [ "compress=zstd" ];
-                  };
-                  "@home" = {
-                    mountpoint = "/home";
-                    mountOptions = [ "compress=zstd" ];
-                  };
-                  "@log" = {
-                    mountpoint = "/var/log";
-                    mountOptions = [ "compress=zstd" ];
-                  };
-                  "@nix" = {
-                    mountpoint = "/nix";
-                    mountOptions = [
-                      "compress=zstd"
-                      "noatime"
+                    type = "btrfs";
+                    extraArgs = [
+                      "-f"
+                      "-L"
+                      "system"
                     ];
+                    subvolumes = {
+                      "@" = {
+                        mountpoint = "/";
+                        mountOptions = [ "compress=zstd" ];
+                      };
+                      "@home" = {
+                        mountpoint = "/home";
+                        mountOptions = [ "compress=zstd" ];
+                      };
+                      "@log" = {
+                        mountpoint = "/var/log";
+                        mountOptions = [ "compress=zstd" ];
+                      };
+                      "@nix" = {
+                        mountpoint = "/nix";
+                        mountOptions = [
+                          "compress=zstd"
+                          "noatime"
+                        ];
+                      };
+                    };
                   };
                 };
               };
@@ -147,6 +123,11 @@
       };
     };
   };
+
+  # virtualisation.vmVariantWithDisko also does not work
+  # virtualisation.vmVariantWithDisko = {
+  #   disko.devices.disk.main.content.partitions.main.content.settings.keyFile = "/tmp/secret.key";
+  # };
 
   # Works if I do the overwrite here
   # disko.devices.disk.main.content.partitions.main.content.settings.keyFile = "/tmp/secret.key";
